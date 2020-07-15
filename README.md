@@ -1,3 +1,11 @@
+# Time Vector Geometry
+
+An app for assisting in the visualization of building "Time Vector Geometries". In essence this is a meditational practice of building geometric fractal shapes or "Vectors", coded with the binary hexagrams of the Iching.
+
+Production: <https://haruhunab.ca>
+
+Dependencies are locked with a `yarn.lock` file, so please use `yarn` and not `npm` for installing them.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
