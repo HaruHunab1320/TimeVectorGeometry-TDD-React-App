@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 
-export const IcosahedralList = ({ loadIcosahedrons }) => {
+export const IcosahedralList = ({ loadIcosahedrons, icosahedrons }) => {
   useEffect(() => {
     loadIcosahedrons();
   }, [loadIcosahedrons]);
 
-  return <div>IcosahedralList</div>;
+  return (
+    <ul>
+      {icosahedrons.map(icosahedron => (
+        <li key={icosahedron.id}>{icosahedron.name}</li>
+      ))}
+    </ul>
+  );
 };
 export default IcosahedralList;
