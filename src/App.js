@@ -1,10 +1,12 @@
 import React from 'react';
+import {Provider} from 'react-redux';
+import store from './store';
 import IcosahedralScreen from './components/IcosahedralScreen';
 
 const App = () => (
-  <div>
+  <Provider store={store}>
     <IcosahedralScreen />
-  </div>
+  </Provider>    
 );
 
 export default App;

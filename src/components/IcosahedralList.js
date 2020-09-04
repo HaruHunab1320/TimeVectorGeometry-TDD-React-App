@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import {connect} from 'react-redux';
+import {loadIcosahedrons} from '../store/icosahedrons/actions';
 
 export const IcosahedralList = ({ loadIcosahedrons, icosahedrons }) => {
   useEffect(() => {
@@ -13,4 +15,11 @@ export const IcosahedralList = ({ loadIcosahedrons, icosahedrons }) => {
     </ul>
   );
 };
-export default IcosahedralList;
+
+const mapStateToProps = state => ({
+  icosahedrons : state.icosahedrons.records,
+})
+
+const mapDispatchToProps = {loadIcosahedrons};
+
+export default connect(mapStateToProps, mapDispatchToProps)(IcosahedralList);
