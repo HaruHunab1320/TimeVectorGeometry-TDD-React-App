@@ -14,7 +14,7 @@ describe('Listing Icos', () => {
       ],
     });
 
-    cy.visit('/');
+    cy.visit('/icoHexSequences');
     cy.contains(creativeGenesis);
     cy.contains(primalMatrix);
   });
