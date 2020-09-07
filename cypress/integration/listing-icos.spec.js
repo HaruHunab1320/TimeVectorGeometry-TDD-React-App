@@ -7,7 +7,7 @@ describe('Listing Icos', () => {
 
     cy.route({
       method: 'GET',
-      url: 'localhost:3000/icoHexSequences',
+      url: 'http://localhost:3001/icoHexSequences',
       response: [
         { id: 1, name: creativeGenesis },
         { id: 2, name: primalMatrix },

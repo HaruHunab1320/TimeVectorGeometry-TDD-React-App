@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/icoHexSequences', (req, res) => {
   res.status(200).json([
@@ -20,6 +22,6 @@ app.get('/icoHexSequences', (req, res) => {
   ]);
 });
 
-app.listen(3000, () => {
-  console.log('express app listening on port 3000');
+app.listen(3001, () => {
+  console.log('express app listening on port 3001');
 });
