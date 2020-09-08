@@ -22,7 +22,6 @@ describe('IcosahedralList', () => {
       ...propOverrides,
     };
     loadIcosahedrons = props.loadIcosahedrons;
-
     context = render(<IcosahedralList {...props} />);
   };
 
@@ -33,13 +32,11 @@ describe('IcosahedralList', () => {
 
   it('displays the icosahedral names', () => {
     const { queryByText } = context;
-
     expect(queryByText('CREATIVE GENESIS')).not.toBeNull();
     expect(queryByText('PRIMAL MATRIX')).not.toBeNull();
   });
 
   describe('when loading succeeds', () => {
-
     it('Displays the loading indicator while loading', ()=>{
       renderWithProps({loading: true});
       const {queryByTestId} = context;
@@ -50,6 +47,16 @@ describe('IcosahedralList', () => {
       const {queryByTestId} = context;
       expect(queryByTestId('loading-indicator')).toBeNull();
     });
+  });
 
+  describe('when loading fails', () => {
+    beforeEach(() => {
+      renderWithProps({loadError: true});
+    });
+
+    it('displays the error message', () => {
+      const {queryAllByText} = context;
+      expect(queryAllByText('Icosahedrons could not be loaded.')).not.toBeNull();
+    });
   });
 });
