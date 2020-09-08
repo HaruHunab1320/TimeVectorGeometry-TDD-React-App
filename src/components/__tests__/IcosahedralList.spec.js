@@ -47,6 +47,11 @@ describe('IcosahedralList', () => {
       const {queryByTestId} = context;
       expect(queryByTestId('loading-indicator')).toBeNull();
     });
+
+    it('does not display the error message', () => {
+      const {queryByText} = context;
+      expect(queryByText('Icosahedrons could not be loaded.')).toBeNull();
+    });
   });
 
   describe('when loading fails', () => {
