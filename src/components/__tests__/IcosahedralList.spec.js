@@ -10,25 +10,39 @@ describe('IcosahedralList', () => {
   let loadIcosahedrons;
   let context;
 
-  beforeEach(() => {
-    loadIcosahedrons = jest.fn().mockName('loadIcosahedrons');
+  const renderWithProps = (propOverrides = {}) => {
+    const props = {
+      loadIcosahedrons: jest.fn().mockName('loadIcosahedrons'),
+      icosahedrons,
+      ...propOverrides,
+    };
+    loadIcosahedrons = props.loadIcosahedrons;
 
-    context = render(
-      <IcosahedralList
-        loadIcosahedrons={loadIcosahedrons}
-        icosahedrons={icosahedrons}
-      />,
-    );
-  });
+    context = render(<IcosahedralList {...props} />);
+  };
 
   it('loads icosahedral names on first render', () => {
+    renderWithProps();
     expect(loadIcosahedrons).toHaveBeenCalled();
   });
 
   it('displays the icosahedral names', () => {
+    renderWithProps();
     const { queryByText } = context;
 
     expect(queryByText('CREATIVE GENESIS')).not.toBeNull();
     expect(queryByText('PRIMAL MATRIX')).not.toBeNull();
+  });
+
+  it('Displays the loading indicator while loading', ()=>{
+    renderWithProps({loading: true});
+    const {queryByTestId} = context;
+    expect(queryByTestId('loading-indicator')).not.toBeNull();
+  });
+
+  it('Does not display the loading indicator while not loading', () => {
+    renderWithProps({loading: false});
+    const {queryByTestId} = context;
+    expect(queryByTestId('loading-indicator')).toBeNull();
   });
 });
