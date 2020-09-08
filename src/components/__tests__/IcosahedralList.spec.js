@@ -34,15 +34,19 @@ describe('IcosahedralList', () => {
     expect(queryByText('PRIMAL MATRIX')).not.toBeNull();
   });
 
-  it('Displays the loading indicator while loading', ()=>{
-    renderWithProps({loading: true});
-    const {queryByTestId} = context;
-    expect(queryByTestId('loading-indicator')).not.toBeNull();
-  });
+  describe('when loading suceeds', () => {
 
-  it('Does not display the loading indicator while not loading', () => {
-    renderWithProps({loading: false});
-    const {queryByTestId} = context;
-    expect(queryByTestId('loading-indicator')).toBeNull();
+    it('Displays the loading indicator while loading', ()=>{
+      renderWithProps({loading: true});
+      const {queryByTestId} = context;
+      expect(queryByTestId('loading-indicator')).not.toBeNull();
+    });
+  
+    it('Does not display the loading indicator while not loading', () => {
+      renderWithProps({loading: false});
+      const {queryByTestId} = context;
+      expect(queryByTestId('loading-indicator')).toBeNull();
+    });
+
   });
 });
