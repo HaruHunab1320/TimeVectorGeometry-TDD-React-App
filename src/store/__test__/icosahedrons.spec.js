@@ -13,7 +13,7 @@ describe('icosahedrons', () => {
 
       let store;
 
-      beforeEach(async () => {
+      beforeEach(() => {
         
         const api = {
           loadIcosahedrons: () => Promise.resolve(records),
@@ -29,12 +29,16 @@ describe('icosahedrons', () => {
           applyMiddleware(thunk.withExtraArgument(api)),
         );
         
-        await store.dispatch(loadIcosahedrons());
+        return store.dispatch(loadIcosahedrons());
       });
 
-      it('stores the icosahedrons', async () => {
 
+      it('stores the icosahedrons', () => {
         expect(store.getState().records).toEqual(records);
+      });
+
+      it('clears the loading flag',()=>{
+        expect(store.getState().loading).toEqual(false);
       });
 
       describe('while loading', () => {
