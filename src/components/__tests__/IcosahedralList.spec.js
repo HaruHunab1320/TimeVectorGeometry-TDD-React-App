@@ -3,6 +3,10 @@ import { render } from '@testing-library/react';
 import { IcosahedralList } from '../IcosahedralList';
 
 describe('IcosahedralList', () => {
+  beforeEach(()=>{
+    renderWithProps();
+  });
+
   const icosahedrons = [
     { id: 1, name: 'CREATIVE GENESIS' },
     { id: 2, name: 'PRIMAL MATRIX' },
@@ -13,6 +17,7 @@ describe('IcosahedralList', () => {
   const renderWithProps = (propOverrides = {}) => {
     const props = {
       loadIcosahedrons: jest.fn().mockName('loadIcosahedrons'),
+      loading: false,
       icosahedrons,
       ...propOverrides,
     };
@@ -27,14 +32,13 @@ describe('IcosahedralList', () => {
   });
 
   it('displays the icosahedral names', () => {
-    renderWithProps();
     const { queryByText } = context;
 
     expect(queryByText('CREATIVE GENESIS')).not.toBeNull();
     expect(queryByText('PRIMAL MATRIX')).not.toBeNull();
   });
 
-  describe('when loading suceeds', () => {
+  describe('when loading succeeds', () => {
 
     it('Displays the loading indicator while loading', ()=>{
       renderWithProps({loading: true});
@@ -43,7 +47,6 @@ describe('IcosahedralList', () => {
     });
   
     it('Does not display the loading indicator while not loading', () => {
-      renderWithProps({loading: false});
       const {queryByTestId} = context;
       expect(queryByTestId('loading-indicator')).toBeNull();
     });
