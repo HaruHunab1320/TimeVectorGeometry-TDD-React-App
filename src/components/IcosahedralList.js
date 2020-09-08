@@ -29,6 +29,7 @@ export const IcosahedralList = ({ loadIcosahedrons, icosahedrons, loading }) => 
 
 const mapStateToProps = state => ({
   icosahedrons : state.icosahedrons.records,
+  loading: state.icosahedrons.loading,
 })
 
 const mapDispatchToProps = {loadIcosahedrons};

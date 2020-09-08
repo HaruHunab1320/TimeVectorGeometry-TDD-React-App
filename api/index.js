@@ -8,18 +8,20 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/icoHexSequences', (req, res) => {
-  res.status(200).json([
-    {
-      id: 1,
-      name: 'CREATIVE GENESIS',
-      created_at: Date.now(),
-    },
-    {
-      id: 2,
-      name: 'PRIMAL MATRIX',
-      created_at: Date.now(),
-    },
-  ]);
+  setTimeout(()=>{
+    res.status(200).json([
+      {
+        id: 1,
+        name: 'CREATIVE GENESIS',
+        created_at: Date.now(),
+      },
+      {
+        id: 2,
+        name: 'PRIMAL MATRIX',
+        created_at: Date.now(),
+      },
+    ]);
+  }, 1000);
 });
 
 app.listen(3001, () => {

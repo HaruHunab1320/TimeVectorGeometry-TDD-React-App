@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {STORE_ICOSAHEDRONS} from './actions';
+import {START_LOADING, STORE_ICOSAHEDRONS} from './actions';
 
 const records = (state = [], action) => {
   switch (action.type) {
@@ -10,8 +10,10 @@ const records = (state = [], action) => {
   }
 };
 
-const loading = (state = true, action) => {
+const loading = (state = false, action) => {
   switch(action.type) {
+    case START_LOADING:
+      return true;
     case STORE_ICOSAHEDRONS:
       return false;
     default:
