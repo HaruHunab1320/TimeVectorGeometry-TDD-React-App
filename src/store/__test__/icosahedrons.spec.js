@@ -6,27 +6,33 @@ import { loadIcosahedrons } from '../icosahedrons/actions';
 describe('icosahedrons', () => {
   describe('loadIcosahedrons action', () => {
     describe('when loading succeeds', () => {
-      it('stores the icosahedrons', async () => {
-        const records = [
-          {id: 1, name: 'CREATIVE GENESIS'},
-          {id: 2, name: 'PRIMAL MATRIX'},
-        ];
+      const records = [
+        {id: 1, name: 'CREATIVE GENESIS'},
+        {id: 2, name: 'PRIMAL MATRIX'},
+      ];
 
+      let store;
+
+      beforeEach(async () => {
+        
         const api = {
           loadIcosahedrons: () => Promise.resolve(records),
         };
-
+      
         const initialState = {
           records: [],
         };
-
-        const store = createStore(
+      
+        store = createStore(
           icosahedronsReducer,
           initialState,
           applyMiddleware(thunk.withExtraArgument(api)),
         );
-
+        
         await store.dispatch(loadIcosahedrons());
+      });
+
+      it('stores the icosahedrons', async () => {
 
         expect(store.getState().records).toEqual(records);
       });
@@ -39,7 +45,7 @@ describe('icosahedrons', () => {
 
           const initialState = {};
 
-          const store = createStore(
+          store = createStore(
             icosahedronsReducer,
             initialState,
             applyMiddleware(thunk.withExtraArgument(api)),
