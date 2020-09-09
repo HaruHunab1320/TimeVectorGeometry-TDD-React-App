@@ -1,5 +1,3 @@
-import { displayPartsToString } from 'typescript';
-
 export const START_LOADING = 'START_LOADING';
 export const STORE_ICOSAHEDRONS = 'STORE_ICOSAHEDRONS';
 export const RECORD_LOADING_ERROR = 'RECORD_LOADING_ERROR';
