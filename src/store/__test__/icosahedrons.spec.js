@@ -39,12 +39,14 @@ describe('icosahedrons', () => {
       });
 
       describe('while loading', () => {
-        it('sets a loading flag', () => {
+        let store;
+
+        beforeEach(() => {
           const api = {
             loadIcosahedrons: () => new Promise(() => {}),
           };
 
-          const initialState = {};
+          const initialState = { loadError: true };
 
           store = createStore(
             icosahedronsReducer,
@@ -53,8 +55,14 @@ describe('icosahedrons', () => {
           );
 
           store.dispatch(loadIcosahedrons());
+        });
 
+        it('sets a loading flag', () => {
           expect(store.getState().loading).toEqual(true);
+        });
+
+        it('clears the error flag', () => {
+          expect(store.getState().loadError).toEqual(false);
         });
       });
 
