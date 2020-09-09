@@ -51,7 +51,7 @@ describe('IcosahedralList', () => {
     it('does not display the error message', () => {
       const {queryByText} = context;
       expect(queryByText('Icosahedrons could not be loaded.')).toBeNull();
-    });
+    })
   });
 
   describe('when loading fails', () => {
@@ -60,8 +60,8 @@ describe('IcosahedralList', () => {
     });
 
     it('displays the error message', () => {
-      const {queryAllByText} = context;
-      expect(queryAllByText('Icosahedrons could not be loaded.')).not.toBeNull();
+      const {queryByText} = context;
+      expect(queryByText('Icosahedrons could not be loaded.')).not.toBeNull();
     });
   });
 });
