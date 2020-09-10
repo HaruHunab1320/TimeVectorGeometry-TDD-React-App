@@ -7,22 +7,26 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+let icoList = [
+  {
+    id: 1,
+    name: 'CREATIVE GENESIS',
+    created_at: Date.now(),
+  },
+  {
+    id: 2,
+    name: 'PRIMAL MATRIX',
+    created_at: Date.now(),
+  },
+];
+
 app.get('/icoHexSequences', (req, res) => {
-  setTimeout(()=>{
-    res.status(200).json([
-      {
-        id: 1,
-        name: 'CREATIVE GENESIS',
-        created_at: Date.now(),
-      },
-      {
-        id: 2,
-        name: 'PRIMAL MATRIX',
-        created_at: Date.now(),
-      },
-    ]);
+  setTimeout(() => {
+    res.status(200).json(icoList);
   }, 1000);
 });
+
+app.post('/icoHexSequences', (req, res) => {});
 
 app.listen(3001, () => {
   console.log('express app listening on port 3001');
