@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { createIcosahedron } from '../store/icosahedrons/actions';
 
 export const NewIcosahedronForm = ({ createIcosahedron }) => {
   const [name, setName] = useState('');
@@ -31,4 +33,7 @@ export const NewIcosahedronForm = ({ createIcosahedron }) => {
   );
 };
 
-export default NewIcosahedronForm;
+const mapStateToProps = null;
+const mapDispatchToProps = { createIcosahedron };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewIcosahedronForm);
