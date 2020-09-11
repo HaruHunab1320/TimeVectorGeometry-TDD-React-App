@@ -23,4 +23,6 @@ const storeIcosahedrons = records => ({
 
 const recordLoadingError = () => ({ type: RECORD_LOADING_ERROR });
 
-export const createIcosahedron = () => () => {};
+export const createIcosahedron = name => (dispatch, getState, api) => {
+  api.createIcosahedron(name);
+};

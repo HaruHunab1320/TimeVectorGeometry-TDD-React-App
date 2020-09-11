@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import icosahedronsReducer from '../icosahedrons/reducers';
-import { loadIcosahedrons } from '../icosahedrons/actions';
+import { loadIcosahedrons, createIcosahedron } from '../icosahedrons/actions';
 
 describe('icosahedrons', () => {
   describe('loadIcosahedrons action', () => {
@@ -92,6 +92,32 @@ describe('icosahedrons', () => {
         it('clears the loading flag', () => {
           expect(store.getState().loading).toEqual(false);
         });
+      });
+    });
+
+    describe('createIcosahedron action', () => {
+      const newIcosahedronName = 'FRESH START';
+
+      let api;
+      let store;
+
+      beforeEach(() => {
+        api = {
+          createIcosahedron: jest.fn().mockName('createIcosahedron'),
+        };
+
+        const initialState = {};
+
+        store = createStore(
+          icosahedronsReducer,
+          initialState,
+          applyMiddleware(thunk.withExtraArgument(api)),
+        );
+      });
+
+      it('saves the icosahedron to the server', () => {
+        store.dispatch(createIcosahedron(newIcosahedronName));
+        expect(api.createIcosahedron).toHaveBeenCalledWith(newIcosahedronName);
       });
     });
   });
