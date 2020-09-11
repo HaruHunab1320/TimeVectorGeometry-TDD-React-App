@@ -97,6 +97,8 @@ describe('icosahedrons', () => {
 
     describe('createIcosahedron action', () => {
       const newIcosahedronName = 'FRESH START';
+      const existingIcosahedron = { id: 1, name: 'CREATIVE GENESIS' };
+      const responseIcosahedron = { id: 2, name: newIcosahedronName };
 
       let api;
       let store;
@@ -106,7 +108,7 @@ describe('icosahedrons', () => {
           createIcosahedron: jest.fn().mockName('createIcosahedron'),
         };
 
-        const initialState = {};
+        const initialState = { records: [existingIcosahedron] };
 
         store = createStore(
           icosahedronsReducer,
@@ -116,8 +118,23 @@ describe('icosahedrons', () => {
       });
 
       it('saves the icosahedron to the server', () => {
+        api.createIcosahedron.mockResolvedValue(responseIcosahedron);
         store.dispatch(createIcosahedron(newIcosahedronName));
         expect(api.createIcosahedron).toHaveBeenCalledWith(newIcosahedronName);
+      });
+
+      describe('when save succeeds', () => {
+        beforeEach(() => {
+          api.createIcosahedron.mockResolvedValue(responseIcosahedron);
+          store.dispatch(createIcosahedron(newIcosahedronName));
+        });
+
+        it('stores the returned iscosahedron in the store', () => {
+          expect(store.getState().records).toEqual([
+            existingIcosahedron,
+            responseIcosahedron,
+          ]);
+        });
       });
     });
   });
