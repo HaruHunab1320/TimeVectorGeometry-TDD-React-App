@@ -18,6 +18,7 @@ export const NewIcosahedronForm = ({ createIcosahedron }) => {
         value={name}
         onChange={e => setName(e.target.value)}
         placeholder="Add Icosahedron"
+        name="addIcosahedron"
         fullWidth
         variant="filled"
       />

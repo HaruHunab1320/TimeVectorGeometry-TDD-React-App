@@ -26,7 +26,17 @@ app.get('/icoHexSequences', (req, res) => {
   }, 1000);
 });
 
-app.post('/icoHexSequences', (req, res) => {});
+app.post('/icoHexSequences', (req, res) => {
+  const newIco = {
+    id: icoList.length + 1,
+    name: req.body.name,
+    created_at: Date.now(),
+  };
+
+  icoList.push(newIco);
+
+  res.status(200).json(newIco);
+});
 
 app.listen(3001, () => {
   console.log('express app listening on port 3001');
