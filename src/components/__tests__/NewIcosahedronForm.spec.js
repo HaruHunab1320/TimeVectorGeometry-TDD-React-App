@@ -6,6 +6,7 @@ import { NewIcosahedronForm } from '../NewIcosahedronForm';
 
 describe('NewIcosahedronForm', () => {
   const icosahedronName = 'FRESH START';
+  const requiredError = 'Name is required';
 
   let createIcosahedron;
   let context;
@@ -15,6 +16,13 @@ describe('NewIcosahedronForm', () => {
     context = render(
       <NewIcosahedronForm createIcosahedron={createIcosahedron} />,
     );
+  });
+
+  describe('initially', () => {
+    it('does not display a validation error', () => {
+      const { queryByText } = context;
+      expect(queryByText(requiredError)).toBeNull();
+    });
   });
 
   describe('when filled in', () => {
@@ -38,6 +46,28 @@ describe('NewIcosahedronForm', () => {
     it('clears the name', () => {
       const { getByPlaceholderText } = context;
       expect(getByPlaceholderText('Add Icosahedron').value).toEqual('');
+    });
+
+    it('does not display a validation error', () => {
+      const { queryByText } = context;
+      expect(queryByText(requiredError)).toBeNull();
+    });
+  });
+
+  describe('when empty', () => {
+    beforeEach(async () => {
+      createIcosahedron.mockResolvedValue();
+
+      const { getByPlaceholderText, getByTestId } = context;
+      await userEvent.type(getByPlaceholderText('Add Icosahedron'), '');
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+
+      return act(flushPromises);
+    });
+
+    it('displays a validation error', () => {
+      const { queryByText } = context;
+      expect(queryByText(requiredError)).not.toBeNull();
     });
   });
 });
