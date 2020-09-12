@@ -102,6 +102,7 @@ describe('icosahedrons', () => {
 
       let api;
       let store;
+      let promise;
 
       beforeEach(() => {
         api = {
@@ -126,7 +127,7 @@ describe('icosahedrons', () => {
       describe('when save succeeds', () => {
         beforeEach(() => {
           api.createIcosahedron.mockResolvedValue(responseIcosahedron);
-          store.dispatch(createIcosahedron(newIcosahedronName));
+          promise = store.dispatch(createIcosahedron(newIcosahedronName));
         });
 
         it('stores the returned iscosahedron in the store', () => {
@@ -134,6 +135,10 @@ describe('icosahedrons', () => {
             existingIcosahedron,
             responseIcosahedron,
           ]);
+        });
+
+        it('resolves', () => {
+          return expect(promise).resolves.toBeUndefined();
         });
       });
     });
