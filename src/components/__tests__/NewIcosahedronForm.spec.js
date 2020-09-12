@@ -69,5 +69,34 @@ describe('NewIcosahedronForm', () => {
       const { queryByText } = context;
       expect(queryByText(requiredError)).not.toBeNull();
     });
+
+    it('does not call createIcosahedron', () => {
+      expect(createIcosahedron).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when correcting a validation error', () => {
+    beforeEach(async () => {
+      createIcosahedron.mockResolvedValue();
+
+      const { getByPlaceholderText, getByTestId } = context;
+
+      await userEvent.type(getByPlaceholderText('Add Icosahedron'), '');
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+      await act(flushPromises);
+
+      await userEvent.type(
+        getByPlaceholderText('Add Icosahedron'),
+        icosahedronName,
+      );
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+
+      return act(flushPromises);
+    });
+
+    it('clears the validation error', () => {
+      const { queryByText } = context;
+      expect(queryByText(requiredError)).toBeNull();
+    });
   });
 });

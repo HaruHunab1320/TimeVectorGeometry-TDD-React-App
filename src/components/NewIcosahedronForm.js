@@ -12,13 +12,14 @@ export const NewIcosahedronForm = ({ createIcosahedron }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!name) {
+    if (name) {
+      setValidationError(false);
+      createIcosahedron(name).then(() => {
+        setName('');
+      });
+    } else {
       setValidationError(true);
     }
-
-    createIcosahedron(name).then(() => {
-      setName('');
-    });
   };
 
   return (
