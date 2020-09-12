@@ -9,7 +9,9 @@ export const NewIcosahedronForm = ({ createIcosahedron }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    createIcosahedron(name);
+    createIcosahedron(name).then(() => {
+      setName('');
+    });
   };
 
   return (
