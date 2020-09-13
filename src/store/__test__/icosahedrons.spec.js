@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import icosahedronsReducer from '../icosahedrons/reducers';
-import { loadIcosahedrons } from '../icosahedrons/actions';
+import { loadIcosahedrons, createIcosahedron } from '../icosahedrons/actions';
 
 describe('icosahedrons', () => {
   describe('loadIcosahedrons action', () => {
@@ -91,6 +91,54 @@ describe('icosahedrons', () => {
 
         it('clears the loading flag', () => {
           expect(store.getState().loading).toEqual(false);
+        });
+      });
+    });
+
+    describe('createIcosahedron action', () => {
+      const newIcosahedronName = 'FRESH START';
+      const existingIcosahedron = { id: 1, name: 'CREATIVE GENESIS' };
+      const responseIcosahedron = { id: 2, name: newIcosahedronName };
+
+      let api;
+      let store;
+      let promise;
+
+      beforeEach(() => {
+        api = {
+          createIcosahedron: jest.fn().mockName('createIcosahedron'),
+        };
+
+        const initialState = { records: [existingIcosahedron] };
+
+        store = createStore(
+          icosahedronsReducer,
+          initialState,
+          applyMiddleware(thunk.withExtraArgument(api)),
+        );
+      });
+
+      it('saves the icosahedron to the server', () => {
+        api.createIcosahedron.mockResolvedValue(responseIcosahedron);
+        store.dispatch(createIcosahedron(newIcosahedronName));
+        expect(api.createIcosahedron).toHaveBeenCalledWith(newIcosahedronName);
+      });
+
+      describe('when save succeeds', () => {
+        beforeEach(() => {
+          api.createIcosahedron.mockResolvedValue(responseIcosahedron);
+          promise = store.dispatch(createIcosahedron(newIcosahedronName));
+        });
+
+        it('stores the returned iscosahedron in the store', () => {
+          expect(store.getState().records).toEqual([
+            existingIcosahedron,
+            responseIcosahedron,
+          ]);
+        });
+
+        it('resolves', () => {
+          return expect(promise).resolves.toBeUndefined();
         });
       });
     });

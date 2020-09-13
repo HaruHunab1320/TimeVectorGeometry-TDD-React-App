@@ -1,6 +1,7 @@
 export const START_LOADING = 'START_LOADING';
 export const STORE_ICOSAHEDRONS = 'STORE_ICOSAHEDRONS';
 export const RECORD_LOADING_ERROR = 'RECORD_LOADING_ERROR';
+export const ADD_ICOSAHEDRON = 'ADD_ICOSAHEDRON';
 
 export const loadIcosahedrons = () => (dispatch, getState, api) => {
   dispatch(startLoading());
@@ -22,3 +23,14 @@ const storeIcosahedrons = records => ({
 });
 
 const recordLoadingError = () => ({ type: RECORD_LOADING_ERROR });
+
+export const createIcosahedron = name => (dispatch, getState, api) => {
+  return api.createIcosahedron(name).then(record => {
+    dispatch(addIcosahedron(record));
+  });
+};
+
+const addIcosahedron = record => ({
+  type: ADD_ICOSAHEDRON,
+  record,
+});

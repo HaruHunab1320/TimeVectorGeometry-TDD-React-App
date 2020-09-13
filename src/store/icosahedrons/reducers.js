@@ -3,12 +3,15 @@ import {
   START_LOADING,
   STORE_ICOSAHEDRONS,
   RECORD_LOADING_ERROR,
+  ADD_ICOSAHEDRON,
 } from './actions';
 
 const records = (state = [], action) => {
   switch (action.type) {
     case STORE_ICOSAHEDRONS:
       return action.records;
+    case ADD_ICOSAHEDRON:
+      return [...state, action.record];
     default:
       return state;
   }
