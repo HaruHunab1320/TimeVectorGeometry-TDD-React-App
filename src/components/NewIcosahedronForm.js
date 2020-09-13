@@ -8,15 +8,21 @@ import { createIcosahedron } from '../store/icosahedrons/actions';
 export const NewIcosahedronForm = ({ createIcosahedron }) => {
   const [name, setName] = useState('');
   const [validationError, setValidationError] = useState(false);
+  const [serverError, setServerError] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
 
     if (name) {
       setValidationError(false);
-      createIcosahedron(name).then(() => {
-        setName('');
-      });
+      setServerError(false);
+      createIcosahedron(name)
+        .then(() => {
+          setName('');
+        })
+        .catch(() => {
+          setServerError(true);
+        });
     } else {
       setValidationError(true);
     }
@@ -24,6 +30,11 @@ export const NewIcosahedronForm = ({ createIcosahedron }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {serverError && (
+        <Alert severity="error">
+          The icosahedron could not be saved. Please try again.
+        </Alert>
+      )}
       {validationError && <Alert severity="error">Name is required</Alert>}
       <TextField
         value={name}

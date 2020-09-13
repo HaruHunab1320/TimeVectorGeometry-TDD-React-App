@@ -7,6 +7,7 @@ import { NewIcosahedronForm } from '../NewIcosahedronForm';
 describe('NewIcosahedronForm', () => {
   const icosahedronName = 'FRESH START';
   const requiredError = 'Name is required';
+  const serverError = 'The icosahedron could not be saved. Please try again.';
 
   let createIcosahedron;
   let context;
@@ -22,6 +23,11 @@ describe('NewIcosahedronForm', () => {
     it('does not display a validation error', () => {
       const { queryByText } = context;
       expect(queryByText(requiredError)).toBeNull();
+    });
+
+    it('does not display a server error', () => {
+      const { queryByText } = context;
+      expect(queryByText(serverError)).toBeNull();
     });
   });
 
@@ -51,6 +57,11 @@ describe('NewIcosahedronForm', () => {
     it('does not display a validation error', () => {
       const { queryByText } = context;
       expect(queryByText(requiredError)).toBeNull();
+    });
+
+    it('does not display a server error', () => {
+      const { queryByText } = context;
+      expect(queryByText(serverError)).toBeNull();
     });
   });
 
@@ -97,6 +108,50 @@ describe('NewIcosahedronForm', () => {
     it('clears the validation error', () => {
       const { queryByText } = context;
       expect(queryByText(requiredError)).toBeNull();
+    });
+  });
+
+  describe('when the store action rejects', () => {
+    beforeEach(async () => {
+      createIcosahedron.mockRejectedValue();
+
+      const { getByPlaceholderText, getByTestId } = context;
+
+      await userEvent.type(
+        getByPlaceholderText('Add Icosahedron'),
+        icosahedronName,
+      );
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+
+      return act(flushPromises);
+    });
+
+    it('displays a server error', () => {
+      const { queryByText } = context;
+      expect(queryByText(serverError)).not.toBeNull();
+    });
+  });
+
+  describe('when retrying after a server error', () => {
+    beforeEach(async () => {
+      createIcosahedron.mockRejectedValueOnce().mockResolvedValueOnce();
+
+      const { getByPlaceholderText, getByTestId } = context;
+      await userEvent.type(
+        getByPlaceholderText('Add Icosahedron'),
+        icosahedronName,
+      );
+
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+      await act(flushPromises);
+
+      userEvent.click(getByTestId('new-icosahedron-submit-button'));
+      return act(flushPromises);
+    });
+
+    it('clears the server error', () => {
+      const { queryByText } = context;
+      expect(queryByText(serverError)).toBeNull();
     });
   });
 });
