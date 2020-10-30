@@ -1,6 +1,6 @@
 # Time Vector Geometry
 
-An app for assisting in the visualization of building "Time Vector Geometries". In essence this is a meditational practice of building geometric fractal shapes or "Vectors", coded with the binary hexagrams of the Iching.
+An app for assisting in the visualization of building "Time Vector Geometries". In essence this is a meditational practice of building geometric fractal shapes or "Vectors", coded with the binary hexagrams of the Iching. In reality this is just a demo slice of some crud functions.
 
 Production: <https://haruhunab.ca>
 
