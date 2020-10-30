@@ -10,6 +10,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+In the /api directory, you need to run the index.js node endpoint.
+
 In the project directory, you can run:
 
 ### `npm start`
